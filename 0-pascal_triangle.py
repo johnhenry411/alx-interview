@@ -1,24 +1,25 @@
-#!/usr/bin/python3
-"""
-0-pascal_triangle
-"""
-
-
 def pascal_triangle(n):
+    """ Pascal's triangle generator using addition
+        Args:
+            - n: levels of pascal triangle
+        Return:
+            - Integer matrix representing pascal triangle
     """
-    Returns a list of integers
-    representing the Pascal Triangle of n
-    returns empty list if n <= 0
-    """
-    k = []
     if n <= 0:
-        return k
-    k = [[1]]
-    for i in range(1, n):
-        temp = [1]
-        for j in range(len(k[i - 1]) - 1):
-            curr = k[i - 1]
-            temp.append(k[i - 1][j] + k[i - 1][j + 1])
-        temp.append(1)
-        k.append(temp)
-    return k
+        return []
+
+    pascal_triangle = []
+    prev_row = []
+    for row in range(n):
+        new_row = []
+        for num in range(row + 1):
+            if num == 0:
+                new_row.append(1)
+                continue
+            try:
+                new_row.append(prev_row[num - 1] + prev_row[num])
+            except IndexError:
+                new_row.append(1)
+        prev_row = new_row
+        pascal_triangle.append(new_row)
+    return pascal_triangle
